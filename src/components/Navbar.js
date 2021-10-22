@@ -1,0 +1,189 @@
+import React, { useContext,useState } from 'react';
+import { SignUpButton } from './SignUpButton';
+import { LoginButton } from './LoginButton';
+import { LogOutButton } from './LogOutButton';
+import { Link } from 'react-router-dom';
+import './Navbar.css';
+//import Dropdown from './Dropdown';
+import {Image} from 'semantic-ui-react';
+
+import { AuthContext } from '../context/auth';
+import {BASE_URL} from '../config'
+
+function Navbar() {
+  const {user ,logout} = useContext(AuthContext);
+  const [click, setClick] = useState(false);
+  //const [dropdown, setDropdown] = useState(false);
+
+  const handleClick = () => setClick(!click);
+  const closeMobileMenu = () => setClick(false);
+
+  // const onMouseEnter = () => {
+  //   if (window.innerWidth < 960) {
+  //     setDropdown(false);
+  //   } else {
+  //     setDropdown(true);
+  //   }
+  // };
+
+  // const onMouseLeave = () => {
+  //   if (window.innerWidth < 960) {
+  //     setDropdown(false);
+  //   } else {
+  //     setDropdown(false);
+  //   }
+  // };
+
+
+
+  const menubar = user ? (
+    <>
+      <nav className='navbar'>
+        <Link to='/' className='navbar-logo' onClick={closeMobileMenu}>
+          NAMAZA
+          <i class="fas fa-plane-departure" style={{marginLeft:5}}/>
+        </Link>
+        <div className='menu-icon' onClick={handleClick}>
+          <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
+        </div>
+        <ul className={click ? 'nav-menu active' : 'nav-menu'}>
+          <li className='nav-item'>
+            <Link to='/' className='nav-links' onClick={closeMobileMenu}>
+            <i class="fas fa-home" style={{marginRight:5}}></i>
+              Home
+            </Link>
+          </li>
+          
+          <li className='nav-item'>
+            <Link
+              to='/products'
+              className='nav-links'
+              onClick={closeMobileMenu}
+            >
+              <i class="fas fa-map-marked-alt" style={{marginRight:5}}></i>
+              Places
+            </Link>
+          </li>
+          <li className='nav-item'>
+            <Link
+              to='/contact-us'
+              className='nav-links'
+              onClick={closeMobileMenu}
+            >
+              <i class="far fa-calendar-alt" style={{marginRight:5}}></i>
+              Events
+            </Link>
+          </li>
+          <li className='nav-item'>
+            <Link
+              to='/marketing'
+              className='nav-links'
+              onClick={closeMobileMenu}
+            >
+              <i class="far fa-calendar-alt" style={{marginRight:5}} ></i>
+              Blog
+            </Link>
+          </li>
+          <li className='nav-item'>
+          <Link
+            
+            onClick={closeMobileMenu}
+          >
+            <Image avatar spaced='right' src={BASE_URL+user.profileImg} />
+          </Link>
+        </li> 
+        </ul>
+        <LogOutButton />
+      </nav>
+    </>
+   ) : ( <>
+    <nav className='navbar'>
+      <Link to='/' className='navbar-logo' onClick={closeMobileMenu}>
+        NAMAZA
+        <i class="fas fa-plane-departure" style={{marginLeft:5}}/>
+      </Link>
+      <div className='menu-icon' onClick={handleClick}>
+        <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
+      </div>
+      <ul className={click ? 'nav-menu active' : 'nav-menu'}>
+      <li className='nav-item'>
+            <Link to='/' className='nav-links' onClick={closeMobileMenu}>
+            <i class="fas fa-home" style={{marginRight:5}}></i>
+              Home
+            </Link>
+          </li>
+          
+          <li className='nav-item'>
+            <Link
+              to='/products'
+              className='nav-links'
+              onClick={closeMobileMenu}
+            >
+              <i class="fas fa-map-marked-alt" style={{marginRight:5}}></i>
+              Places
+            </Link>
+          </li>
+          <li className='nav-item'>
+            <Link
+              to='/contact-us'
+              className='nav-links'
+              onClick={closeMobileMenu}
+            >
+              <i class="far fa-calendar-alt" style={{marginRight:5}}></i>
+              Events
+            </Link>
+          </li>
+          <li className='nav-item'>
+            <Link
+              to='/marketing'
+              className='nav-links'
+              onClick={closeMobileMenu}
+            >
+              <i class="far fa-calendar-alt" style={{marginRight:5}} ></i>
+              Blog
+            </Link>
+          </li> 
+        <li className='nav-item'>
+          <Link
+            
+            onClick={closeMobileMenu}
+          >
+            <LoginButton />
+          </Link>
+        </li> 
+               
+      </ul>
+      
+      <SignUpButton />
+    </nav>
+  </>);
+
+  return menubar;
+}
+
+export default Navbar;
+
+
+
+
+
+
+
+
+
+// {
+  /* <li
+          className='nav-item'
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={onMouseLeave}
+        >
+          <Link
+            to='/services'
+            className='nav-links'
+            onClick={closeMobileMenu}
+          >
+            Services <i className='fas fa-caret-down' />
+          </Link>
+          {dropdown && <Dropdown />}
+        </li> */
+      // }
